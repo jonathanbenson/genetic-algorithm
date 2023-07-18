@@ -3,9 +3,10 @@ from random import randint, uniform, choice
 from statistics import stdev
 FILE_PATH = 'data.csv'
 
-NUM_GROUPS = 7
+NUM_GROUPS = 10
 
-NUM_GENERATIONS = 20
+NUM_SPECIES = 5
+NUM_GENERATIONS = 100
 POPULATION_SIZE = 500
 TOURNAMENT_SIZE = 10
 CROSSOVER_RATE = .9
@@ -108,12 +109,13 @@ def max_fitness(population) :
     return max_fitness
 
 
-
-population = [[randint(0, NUM_GROUPS - 1) for _ in range(len(KEYS))] for _ in range(POPULATION_SIZE)]
+populations = [[[randint(0, NUM_GROUPS - 1) for _ in range(len(KEYS))] for _ in range(POPULATION_SIZE)] for _ in range(NUM_SPECIES)]
 
 for i in range(NUM_GENERATIONS) :
 
-    print(f'Generation {i + 1}. Fitness: {max_fitness(population)}')
+    print(f'Generation {i + 1}. Max fitness: {max([max_fitness(population) for population in populations])}')
 
-    population = evolve(population)
+    for j in range(NUM_SPECIES) :
+
+        populations[j] = evolve(populations[j])
 

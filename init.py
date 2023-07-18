@@ -2,7 +2,7 @@
 from random import randint, choice
 
 WORD_LENGTH = 10
-NUM = 1000
+NUM = 42
 HI = 100
 LO = 1
 
