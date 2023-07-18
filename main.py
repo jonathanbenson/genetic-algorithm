@@ -3,14 +3,16 @@ from random import randint, uniform, choice
 from statistics import stdev
 FILE_PATH = 'data.csv'
 
-NUM_GROUPS = 10
+NUM_GROUPS = 5
 
-NUM_SPECIES = 5
+NUM_SPECIES = 10
 NUM_GENERATIONS = 100
 POPULATION_SIZE = 500
 TOURNAMENT_SIZE = 10
 CROSSOVER_RATE = .9
 MUTATION_RATE = .01
+MUTATION_DECAY_FACTOR = .8
+MUTATION_DECAY_PATIENCE = 5
 
 def get_data(file_path) :
 
@@ -113,7 +115,11 @@ populations = [[[randint(0, NUM_GROUPS - 1) for _ in range(len(KEYS))] for _ in 
 
 for i in range(NUM_GENERATIONS) :
 
-    print(f'Generation {i + 1}. Max fitness: {max([max_fitness(population) for population in populations])}')
+    print(f'Generation {i + 1}. Mutation rate: {MUTATION_RATE}. Max fitness: {max([max_fitness(population) for population in populations])}')
+
+    
+    if (i + 1) % MUTATION_DECAY_PATIENCE == 0 :
+        MUTATION_RATE *= MUTATION_DECAY_FACTOR
 
     for j in range(NUM_SPECIES) :
 
